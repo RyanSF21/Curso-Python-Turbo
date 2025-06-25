@@ -15,6 +15,26 @@
       padding: 20px;
     }
 
+    .timer-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background-color: #1b1fee;
+      color: #ffffff;
+      font-weight: bold;
+      text-align: center;
+      padding: 5px 0;
+      font-size: 18px;
+      z-index: 9999;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+
+      body {
+        padding-top: 60px;
+        /* Compensa a altura da barra fixa no topo */
+      }
+    }
+
     h1,
     h2 {
       color: #f1c40f;
@@ -29,8 +49,11 @@
       font-weight: bold;
       border-radius: 8px;
       margin-top: 20px;
-      transition: background-color 0.3s ease;
+      transition: background-color 0.3s ease, transform 0.2s ease-in-out;
+      animation: heartbeat 2.5s infinite;
+      box-shadow: 0 0 15px rgba(3, 156, 42, 0.4);
     }
+
 
     .cta-button:hover {
       background-color: #4dd300;
@@ -60,10 +83,38 @@
     a {
       color: #12f337;
     }
+
+    @keyframes heartbeat {
+
+      0%,
+      100% {
+        transform: scale(1);
+      }
+
+      14% {
+        transform: scale(1.3);
+      }
+
+      28% {
+        transform: scale(1);
+      }
+
+      42% {
+        transform: scale(1.3);
+      }
+
+      70% {
+        transform: scale(1);
+      }
+    }
   </style>
 </head>
 
 <body>
+  <div class="timer-bar">
+    ⏳ Promoção válida pelos próximos <span id="countdown">01:20</span> minutos!
+  </div>
+
 
   <h1>🚀 Aprenda Python de Forma Rápida, Prática e Sem Complicação!</h1>
 
@@ -103,7 +154,23 @@
 
   <h2>✅ Garanta sua vaga com condições especiais:</h2>
   <a class="cta-button" href="https://kiwify.app/0GXAFQB?afid=gDk3zOV7" target="_blank">👉 ACESSAR O CURSO PYTHON TURBO</a>
+  <script>
+    let timeLeft = 1.50 * 60;
+    const countdownEl = document.getElementById("countdown");
 
+    const countdown = setInterval(() => {
+      const minutes = Math.floor(timeLeft / 60);
+      const seconds = timeLeft % 60;
+
+      countdownEl.textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+      timeLeft--;
+
+      if (timeLeft < 0) {
+        clearInterval(countdown);
+        countdownEl.textContent = "00:00";
+      }
+    }, 1000);
+  </script>
 </body>
 
 </html>
